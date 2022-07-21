@@ -5,12 +5,12 @@ from functools import partial
 event_loop = None
 
 class EventLoop(Queue):
-  def start(self, limit=10):
+  def start(self, limit=-1):
     while True: #петля
       function = self.get() #взять из очереди
       function()
       limit -= 1
-      if limit ==0: break
+      if limit == 0: break
 
 def buy_water():
   global event_loop
@@ -21,6 +21,11 @@ def buy_bread():
   global event_loop
   print("Buying bread")
   event_loop.put(buy_water) #поставить в очередь
+
+def buy_iphone():
+  global event_loop
+  print("Buying iphone")
+  exit(1)
 
 event_loop = EventLoop()
 event_loop.put(buy_water)
